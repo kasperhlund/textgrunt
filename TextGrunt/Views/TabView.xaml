@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="TextGrunt.Views.TabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:localviews="clr-namespace:TextGrunt.Views"
+             xmlns:local="clr-namespace:TextGrunt"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="500">
+    <Grid>
+        <local:CustomDataGrid
+                    CanUserAddRows="True"
+                    CanUserDeleteRows="True"
+                    CanUserSortColumns="True"
+                    ItemsSource="{Binding Sheet.Rows}"
+                    EnableRowVirtualization="False"
+                    local:DataGridBehavior.DisplayRowNumber="True"
+                    SelectionMode="Extended"
+                    SelectedItemsList="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    AutoGenerateColumns="False"
+                    AlternatingRowBackground="LightGray"
+                    LoadingRow="DataGrid_LoadingRow"
+                    Unloaded="DataGrid_Unloaded">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Text" Binding="{Binding Text}" Width="450" CanUserResize="False">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                            <Setter Property="TextBlock.TextWrapping" Value="WrapWithOverflow" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="AcceptsReturn" Value="true" />
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="ToolTip" Value="{Binding MoreInfo}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="129" CanUserResize="False">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                            <Setter Property="TextBlock.TextWrapping" Value="WrapWithOverflow" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="AcceptsReturn" Value="true" />
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="ToolTip" Value="{Binding MoreInfo}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+            <local:CustomDataGrid.ContextMenu>
+                <ContextMenu Focusable="False">
+                    <MenuItem Header="_Copy" Command="{Binding CopySelectedCommand}" Focusable="False" />
+                    <MenuItem Header="_Search (Google) this text in browser" Command="{Binding InternetSearchSelectedCommand}" Focusable="False" />
+                    <Separator />
+                    <MenuItem Header="Move _up" Command="{Binding MoveUpSelectedCommand}" Focusable="False" />
+                    <MenuItem Header="Move _down" Command="{Binding MoveDownSelectedCommand}" Focusable="False" />
+                    <MenuItem Header="_Remove" Command="{Binding RemoveSelectedCommand}" Focusable="False" />
+                    <Separator />
+                    <MenuItem Header="Comment" Command="{Binding CommentSelectedCommand}" Focusable="False" />
+                    <MenuItem Header="_Manipulate text" Focusable="False">
+                        <MenuItem Header="_Remove whitespace" Command="{Binding RemoveWhitespaceSelectedCommand}" Focusable="False" />
+                        <MenuItem Header="To _CAPS" Command="{Binding ToCapsCommand}" Focusable="False" />
+                        <MenuItem Header="To _lower" Command="{Binding ToLowerCommand}" Focusable="False" />
+                    </MenuItem>
+                </ContextMenu>
+            </local:CustomDataGrid.ContextMenu>
+        </local:CustomDataGrid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="TextGrunt.Views.AboutView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:TextGrunt.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="500">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="TextGrunt" FontWeight="ExtraBold" FontSize="18" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" />
+        <TextBlock Text="{Binding Version}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" />
+        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center">
+            <Image Source="../Assets/Textgrunt.png" Width="100" />
+            <TextBlock Text="Copyright (c) 2017 Kasper Höglund. The MIT license" />
+            <TextBlock><Hyperlink NavigateUri="http://github.com/kasperhlund/textgrunt" RequestNavigate="Hyperlink_RequestNavigate">http://github.com/kasperhlund/textgrunt</Hyperlink></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left">
+            <TextBlock Text="Using:" />
+            <TextBlock>
+                <Hyperlink NavigateUri="https://caliburnmicro.com/" RequestNavigate="Hyperlink_RequestNavigate">
+                Caliburn Micro
+                </Hyperlink>
+                Copyright (c) 2010 Blue Spire Consulting, Inc. The MIT License
+            </TextBlock>
+            <TextBlock>
+                <Hyperlink NavigateUri="https://www.newtonsoft.com/json" RequestNavigate="Hyperlink_RequestNavigate">
+                Newtonsoft JSON
+                </Hyperlink>
+                Copyright (c) 2007 James Newton-King. The MIT License
+            </TextBlock>
+            <TextBlock>
+                <Hyperlink NavigateUri="http://www.hardcodet.net/wpf-notifyicon" RequestNavigate="Hyperlink_RequestNavigate">
+                Hardcodet.net WPF-Notyicon
+                </Hyperlink>
+                Philipp Sumi. The Code Project Open License (CPOL) 1.02
+            </TextBlock>
+            <TextBlock>
+                <Hyperlink NavigateUri="http://www.ninject.org/" RequestNavigate="Hyperlink_RequestNavigate">
+                Ninject
+                </Hyperlink>
+                Apache License, Version 2.0
+            </TextBlock>
+            <TextBlock>
+                <Hyperlink NavigateUri="http://p.yusukekamiyamane.com/" RequestNavigate="Hyperlink_RequestNavigate">
+                Icons from p.yusukekamiyamane.com
+                </Hyperlink>
+                Yusuke Kamiyamane. CC BY 3.0 license
+            </TextBlock>
+            <TextBlock>
+                TextGrunt icon by Mattias Guhl
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>
