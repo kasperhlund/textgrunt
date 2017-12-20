@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Kasper\Dropbox\Clipbroad\Clipbroad\obj\Release\
+C:\Users\Kasper\Dropbox\github\TextGrunt\obj\Release\
 TextGrunt
 none
 false
 TRACE
-C:\Users\Kasper\Dropbox\Clipbroad\Clipbroad\App.xaml
-5-1094131144
+C:\Users\Kasper\Dropbox\github\TextGrunt\App.xaml
+697858420
 
-411181941350
-731385993912
-Views\HistoryView.xaml;Views\InputTextView.xaml;Views\ShellView.xaml;Views\TextsView.xaml;Views\OptionsView.xaml;
+422104998227
+75801836562
+Views\AboutView.xaml;Views\InputTextView.xaml;Views\MainView.xaml;Views\SystemTrayView.xaml;Views\TabView.xaml;Views\OptionsView.xaml;
 
-True
+False
 

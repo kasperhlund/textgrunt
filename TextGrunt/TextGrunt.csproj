@@ -185,9 +185,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="About.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Textgrunt.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Kasper\Dropbox\TextGrunt\TextGrunt\obj\Debug\
+C:\Users\Kasper\Dropbox\github\TextGrunt\obj\Debug\
 TextGrunt
 none
 false
 DEBUG;TRACE
-C:\Users\Kasper\Dropbox\TextGrunt\TextGrunt\App.xaml
+C:\Users\Kasper\Dropbox\github\TextGrunt\App.xaml
 697858420
 
 382075398701
-75-815139484
+75801836562
 Views\AboutView.xaml;Views\InputTextView.xaml;Views\MainView.xaml;Views\SystemTrayView.xaml;Views\TabView.xaml;Views\OptionsView.xaml;
 
 False

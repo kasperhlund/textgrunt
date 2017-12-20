@@ -55,7 +55,7 @@
             </TextBlock>
             <TextBlock>
                 <Hyperlink NavigateUri="http://p.yusukekamiyamane.com/" RequestNavigate="Hyperlink_RequestNavigate">
-                Icons from p.yusukekamiyamane.com
+                Fugue Icons
                 </Hyperlink>
                 Yusuke Kamiyamane. CC BY 3.0 license
             </TextBlock>
