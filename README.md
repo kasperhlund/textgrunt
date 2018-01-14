@@ -10,4 +10,4 @@ To copy text to clipboard either use main view or right click textgrunt traybar 
 
 User data is stored in %appdata%\TextGrunt
 
-Textgrunt is written by Kasper Höglund and is licensed under The MIT license.
+Textgrunt uses the MIT license.
