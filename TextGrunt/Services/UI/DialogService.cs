@@ -19,7 +19,7 @@ namespace TextGrunt.Services
             _optionsViewModel = optionsViewModel;
         }
 
-        public string GetUserTextInput(string header, string question, string initialResponse = "")
+        public string GetUserTextInput(string header, string question, string initialResponse = "", bool isMultiline = true)
         {
             dynamic settings = new ExpandoObject();
             settings.WindowStyle = WindowStyle.ToolWindow;
@@ -27,7 +27,7 @@ namespace TextGrunt.Services
             settings.Title = header;
             settings.ResizeMode = ResizeMode.NoResize;
 
-            var vm = new InputTextViewModel(header, question, initialResponse);
+            var vm = new InputTextViewModel(header, question, initialResponse, isMultiline);
             if (_windowManager.ShowDialog(vm, null, settings))
             {
                 return vm.Response;

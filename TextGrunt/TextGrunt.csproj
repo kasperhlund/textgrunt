@@ -84,6 +84,7 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Services\Model\IBookService.cs" />
+    <Compile Include="ViewModels\ToCopyCommandConverter.cs" />
     <Compile Include="Wpf\CustomDataGrid.cs" />
     <Compile Include="Wpf\DataGridBehavior.cs" />
     <Compile Include="Wpf\MarginSetter.cs" />

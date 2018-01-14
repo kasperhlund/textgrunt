@@ -2,7 +2,7 @@
 {
     public interface IDialogService
     {
-        string GetUserTextInput(string header, string question, string initialResponse);
+        string GetUserTextInput(string header, string question, string initialResponse, bool isMultiline = true);
 
         string GetUserFileOpenInput();
 

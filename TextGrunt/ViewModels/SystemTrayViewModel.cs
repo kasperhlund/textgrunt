@@ -5,6 +5,7 @@ using System.Windows.Input;
 using TextGrunt.Messages;
 using TextGrunt.Models;
 using TextGrunt.Services;
+using System.Linq;
 
 namespace TextGrunt.ViewModels
 {
@@ -20,19 +21,6 @@ namespace TextGrunt.ViewModels
         }
 
         public BindableCollection<Sheet> Sheets => _bookService.Book.Sheets;
-
-        public ICommand CopyCommand => new RelayCommand(o => true, DoStuff);
-
-        public void DoStuff(object o)
-        {
-            Debug.WriteLine("Copy");
-        }
-
-        protected override void OnActivate()
-        {
-            base.OnActivate();
-            //ShowWindow();
-        }
 
         public void ShowWindow()
         {
@@ -65,14 +53,6 @@ namespace TextGrunt.ViewModels
 
         public void ExitApplication()
         {
-            /*
-            if (!_dialogService.ShowOkCancel($"Close? Any unsaved changes will be lost."))
-            {
-                callback(false);
-                return;
-            }
-            */
-
             Application.Current.Shutdown();
         }
     }

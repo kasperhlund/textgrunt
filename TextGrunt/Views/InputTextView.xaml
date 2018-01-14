@@ -21,7 +21,7 @@
             <ColumnDefinition Width="10" />
         </Grid.ColumnDefinitions>
         <TextBlock Text="{Binding Challenge}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" />
-        <TextBox Text="{Binding Response, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Height="200" Width="400" />
+        <TextBox Text="{Binding Response, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="{Binding ShouldAcceptReturn}" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Height="{Binding InitialHeight}" Width="400" />
         <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="3" local:MarginSetter.Margin="5">
             <Button Content="Ok" Command="{Binding OkCommand}" />
             <Button Content="Cancel" Command="{Binding CancelCommand}" />

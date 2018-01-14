@@ -43,7 +43,5 @@ namespace TextGrunt.Models
                 return $"Length: {_text.Length}{Environment.NewLine}Comment:{Comment}";
             }
         }
-
-        public ICommand CopyToClipBoard => new RelayCommand(o => true, o => Clipboard.SetText(Text));
     }
 }

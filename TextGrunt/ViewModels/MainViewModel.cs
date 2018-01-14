@@ -134,7 +134,7 @@ namespace TextGrunt.ViewModels
         private void AskAndRenameActive()
         {
             var vm = GetActive();
-            string newName = _dialogService.GetUserTextInput($"Rename {vm.Sheet.Name}", "Enter new name", vm.Sheet.Name);
+            string newName = _dialogService.GetUserTextInput($"Rename {vm.Sheet.Name}", "Enter new name", vm.Sheet.Name, false);
             if (newName == null)
                 return;
             vm.Sheet.Name = newName;

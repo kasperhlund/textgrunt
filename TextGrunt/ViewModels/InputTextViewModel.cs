@@ -7,12 +7,14 @@ namespace TextGrunt.ViewModels
     {
         private string _challenge;
         private string _response = string.Empty;
+        private bool _isMultiline;
 
-        public InputTextViewModel(string header, string challenge, string initialResponse)
+        public InputTextViewModel(string header, string challenge, string initialResponse, bool isMultiLine = true)
         {
             DisplayName = header;
             _challenge = challenge;
             Response = initialResponse;
+            _isMultiline = isMultiLine;
 
             OkCommand = new RelayCommand(o => true, o => TryClose(true));
             CancelCommand = new RelayCommand(o => true, o => TryClose(false));
@@ -42,5 +44,11 @@ namespace TextGrunt.ViewModels
         {
             get; private set;
         }
+
+        public bool ShouldAcceptReturn => _isMultiline;
+
+        public int InitialHeight => _isMultiline ? 200 : 20;
+
+
     }
 }
