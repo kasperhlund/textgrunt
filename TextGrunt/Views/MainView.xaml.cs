@@ -11,12 +11,9 @@ namespace TextGrunt.Views
         public MainView()
         {
             InitializeComponent();
-            Loaded += OnLoaded;
+
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            Application.Current.MainWindow = Window.GetWindow(this);
-        }
+
     }
 }

@@ -4,19 +4,20 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Data;
-using TextGrunt.Models;
 
 namespace TextGrunt.ViewModels
 {
-    public class ToCopyCommandConverter : IValueConverter
+    public class TabIconConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var row = (Row)value;
+            var icon = value as IHaveIcon;
 
-            return new RelayCommand((o) => true, (o) => Clipboard.SetText(row.Text));
+            if (icon?.IconType == IconType.ClipBoard)
+                return "../Assets/scissors.Png";
+
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

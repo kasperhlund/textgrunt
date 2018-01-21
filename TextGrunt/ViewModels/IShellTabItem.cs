@@ -1,5 +1,14 @@
 ﻿using Caliburn.Micro;
 
-public interface IShellTabItem : IScreen
+namespace TextGrunt.ViewModels
 {
+
+    public interface IShellTabItem : IScreen
+    {
+        
+    }
+
+
+
+
 }

@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using Ninject;
+using System;
 using System.Windows.Input;
 using TextGrunt.Models;
 using TextGrunt.Services;
@@ -26,7 +27,6 @@ namespace TextGrunt.ViewModels
         }
 
         public ICommand NewTabCommand => new RelayCommand(o => true, o => AddNewTab());
-#pragma warning disable RECS0154 // Parameter is never used
         public ICommand AboutCommand => new RelayCommand(o => true, o => _dialogService.ShowAbout());
         public ICommand OptionsCommand => new RelayCommand(o => true, o => _dialogService.ShowOptions());
         public ICommand RemoveActiveCommand => new RelayCommand(o => HasActive(), o => AskAndRemoveActive());
@@ -34,6 +34,7 @@ namespace TextGrunt.ViewModels
         public ICommand CloseCommand => new RelayCommand(o => true, o => TryClose());
         public ICommand ImportCommand => new RelayCommand(o => true, o => ImportFromFile());
         public ICommand ExportActiveCommand => new RelayCommand(o => HasActive(), o => ExportActive());
+        public ICommand OpenHelpCommand => new RelayCommand(o => true, o => System.Diagnostics.Process.Start($"help.txt"));
         public bool IsClosed { get; set; }
 
         //
@@ -45,6 +46,9 @@ namespace TextGrunt.ViewModels
             {
                 Display(sheet);
             }
+
+            Items.Add(_kernel.Get<ClipboardViewModel>());
+
 
             IsClosed = false;
             base.OnActivate();
@@ -134,10 +138,10 @@ namespace TextGrunt.ViewModels
         private void AskAndRenameActive()
         {
             var vm = GetActive();
-            string newName = _dialogService.GetUserTextInput($"Rename {vm.Sheet.Name}", "Enter new name", vm.Sheet.Name, false);
+            string newName = _dialogService.GetUserTextInput($"Rename {vm.DisplayName}", "Enter new name", vm.DisplayName, false);
             if (newName == null)
                 return;
-            vm.Sheet.Name = newName;
+            vm.DisplayName = newName;
         }
     }
 }

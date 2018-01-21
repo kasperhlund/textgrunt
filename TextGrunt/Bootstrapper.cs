@@ -30,22 +30,14 @@ namespace TextGrunt
         {
             _kernel.Bind<StandardKernel>().ToConstant(_kernel);
             _kernel.Bind<IStorageService>().To<JsonStorageService>();
-            _kernel.Bind<TabViewModel>().To<TabViewModel>();
-            _kernel.Bind<TabView>().To<TabView>();
             _kernel.Bind<IOptionsService>().To<OptionsService>().InSingletonScope();
-            _kernel.Bind<OptionsViewModel>().To<OptionsViewModel>();
-            _kernel.Bind<OptionsView>().To<OptionsView>();
-            _kernel.Bind<MainView>().To<MainView>().InSingletonScope();
-            _kernel.Bind<SystemTrayView>().To<SystemTrayView>();
-            _kernel.Bind<SystemTrayViewModel>().To<SystemTrayViewModel>().InSingletonScope();
-            _kernel.Bind<MainViewModel>().To<MainViewModel>();
             _kernel.Bind<IWindowManager>().To<WindowManager>().InSingletonScope();
             _kernel.Bind<IDialogService>().To<DialogService>().InSingletonScope();
             _kernel.Bind<IEventAggregator>().To<EventAggregator>().InSingletonScope();
             _kernel.Bind<IBookService>().To<BookService>().InSingletonScope();
-            _kernel.Bind<AboutViewModel>().To<AboutViewModel>();
-            _kernel.Bind<AboutView>().To<AboutView>();
             _kernel.Bind<IHandle<ToggleMainViewVisibleMessage>>().To<ToggleMainViewVisibleMessageHandler>().InSingletonScope();
+            _kernel.Bind<IClipboardService>().To<ClipboardService>().InSingletonScope();
+
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
@@ -62,6 +54,9 @@ namespace TextGrunt
             _mainViewDisplayMessageHandler = _kernel.Get<IHandle<ToggleMainViewVisibleMessage>>();
             _bookService = _kernel.Get<IBookService>();
             DisplayRootViewFor<SystemTrayViewModel>();
+
+            //Now there is window so can register ClipBoardService
+
 
             if (!Environment.GetCommandLineArgs().Contains(CommandlineOnlyTrayBar))
                 _mainViewDisplayMessageHandler.Handle(new ToggleMainViewVisibleMessage() { Visible = true });

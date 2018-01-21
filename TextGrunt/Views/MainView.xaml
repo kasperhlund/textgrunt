@@ -4,8 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:TextGrunt.Views"
+             xmlns:vm="clr-namespace:TextGrunt.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" Width="600" Height="600">
+    <UserControl.Resources>
+        <vm:TabIconConverter x:Key="TabIconConverter" />
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -29,6 +34,7 @@
                     <MenuItem Header="Export active tab..." Command="{Binding ExportActiveCommand}" />
                 </MenuItem>
                 <MenuItem Header="_Help">
+                    <MenuItem Header="_Open Help.txt" Command="{Binding OpenHelpCommand}" />
                     <MenuItem Header="_About" Command="{Binding AboutCommand}" />
                 </MenuItem>
             </Menu>
@@ -55,7 +61,8 @@
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Sheet.Name}" />
+                        <Image Source="{Binding Converter={StaticResource TabIconConverter}}" />
+                        <TextBlock Text="{Binding DisplayName}" />
                     </StackPanel>
                 </DataTemplate>
             </TabControl.ItemTemplate>

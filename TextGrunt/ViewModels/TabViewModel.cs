@@ -15,11 +15,12 @@ namespace TextGrunt.ViewModels
         private IDialogService _dialogService;
         private Sheet _sheet;
         private IList _selected;
-        private string _filename;
+        private IClipboardService _clipboardService;
 
-        public TabViewModel(IDialogService dialogService)
+        public TabViewModel(IDialogService dialogService, IClipboardService clipboardService)
         {
             _dialogService = dialogService;
+            _clipboardService = clipboardService;
         }
 
         public Sheet Sheet
@@ -29,8 +30,22 @@ namespace TextGrunt.ViewModels
             {
                 _sheet = value;
                 NotifyOfPropertyChange();
+                NotifyOfPropertyChange(nameof(DisplayName));
             }
         }
+
+        public override string DisplayName
+        {
+            get => _sheet.Name;
+            set
+            {
+                _sheet.Name = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+
+
 
         public IList Selected
         {
@@ -40,16 +55,6 @@ namespace TextGrunt.ViewModels
                 // dont wanna select the newitemplaceholder
                 _selected = value.OfType<Row>().ToList();
                 NotifyOfPropertyChange();
-            }
-        }
-
-        public string Filename
-        {
-            get { return _filename; }
-            set
-            {
-                _filename = value;
-                DisplayName = _filename;
             }
         }
 
@@ -125,7 +130,7 @@ namespace TextGrunt.ViewModels
 
         private void CopySelected()
         {
-            Clipboard.SetText(((Row)Selected[0]).Text);
+            _clipboardService.ToClipBoard(((Row)Selected[0]).Text);
         }
 
         private int CountSelected()

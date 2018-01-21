@@ -16,33 +16,30 @@
         Background="Transparent"
         Visibility="Hidden">
     <Window.Resources>
-        <!-- NotifyIcon and related stuff here -->
-
+        <vm:TabIconConverter x:Key="TabIconConverter" />
         <!-- The taskbar context menu -->
         <!--
         The "shared" directive is needed if we reopen the sample window a few times - WPF will otherwise
         reuse the same context menu (which is a resource) again (which will have its DataContext set to the old TaskbarIcon)
         -->
-        
-        <vm:ToCopyCommandConverter x:Key="ToCopyCommandConverter" />
-
-        <CollectionViewSource x:Key="MySheets" Source="{Binding Path=Sheets}" />
-
-        <ContextMenu x:Shared="false" x:Key="BookMenu">
+        <CollectionViewSource x:Key="Items" Source="{Binding Path=Items}" />
+        <ContextMenu x:Shared="false" x:Key="Menu" HorizontalContentAlignment="Stretch">
             <ContextMenu.ItemTemplate>
-                <HierarchicalDataTemplate DataType="Sheet" ItemsSource="{Binding Rows}">
-                    <TextBlock Text="{Binding Name}">
-                    </TextBlock>
+                <HierarchicalDataTemplate DataType="SystemTrayItemsViewModel" ItemsSource="{Binding Items}">
+                    <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding Converter={StaticResource TabIconConverter}}" />
+                    <TextBlock Text="{Binding Name}" />
+                    </StackPanel>
                     <HierarchicalDataTemplate.ItemTemplate>
                         <DataTemplate>
-                            <MenuItem Header="{Binding Text}" ToolTip="{Binding MoreInfo}" Command="{Binding Converter={StaticResource ToCopyCommandConverter}}" />
+                            <MenuItem Header="{Binding Text}" ToolTip="{Binding ToolTip}" Command="{Binding ToClipBoardCommand}" HorizontalContentAlignment="Stretch"/>
                         </DataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>
                 </HierarchicalDataTemplate>
             </ContextMenu.ItemTemplate>
             <ContextMenu.ItemsSource>
                 <CompositeCollection>
-                    <CollectionContainer Collection="{Binding Source={StaticResource MySheets}}">
+                    <CollectionContainer Collection="{Binding Source={StaticResource Items}}">
                     </CollectionContainer>
                     <Separator />
                     <MenuItem Header="Exit" cal:Message.Attach="ExitApplication" />
@@ -50,12 +47,13 @@
             </ContextMenu.ItemsSource>
         </ContextMenu>
 
+
         <!-- the application main system tray icon -->
         <tb:TaskbarIcon x:Key="SystemTrayIcon"
                         IconSource="../Assets/Textgrunt.ico"
                         ToolTipText="Double-click for window, right-click for menu"
                         cal:Message.Attach="[Event TrayMouseDoubleClick] = [Action ShowWindow]"
-                        ContextMenu="{StaticResource BookMenu}" />
+                        ContextMenu="{StaticResource Menu}" />
     </Window.Resources>
 
     <Grid>

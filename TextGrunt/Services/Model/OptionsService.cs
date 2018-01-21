@@ -25,7 +25,7 @@ namespace TextGrunt.Services
 
         public Options Default => new Options
         {
-            HasAutoStart = false,
+            HasAutoStart = true,
         };
 
         private string DefaultSettingsLocation
