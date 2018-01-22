@@ -78,7 +78,7 @@ namespace TextGrunt.ViewModels
                 .Select(sheet => 
                 new SystemTrayItemsViewModel
                 { Name = sheet.Name
-                , Items = new BindableCollection<SystemTrayItemViewModel>(sheet.Rows.Select(row => new SystemTrayItemViewModel { Text = row.Text, ToolTip = row.MoreInfo })) }));
+                , Items = new BindableCollection<SystemTrayItemViewModel>(sheet.Rows.Select(row => new SystemTrayItemViewModel { Text = row.Text, ToolTip = row.MoreInfo, ToClipBoardCommand = new RelayCommand(o => true, o => _clipboardService.ToClipBoard(row.Text)) })) }));
 
             _items.Add(
                 new SystemTrayItemsViewModel { Name = "Clipboard history", IconType = IconType.ClipBoard,
