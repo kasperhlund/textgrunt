@@ -28,7 +28,6 @@ namespace TextGrunt.ViewModels
             _clipboardService.Clips.CollectionChanged += (s, e) => PopulateItems();
         }
 
-
         protected override void OnViewLoaded(object view)
         {
             _clipboardService.Initiate(view as Window);
@@ -73,20 +72,8 @@ namespace TextGrunt.ViewModels
         void PopulateItems()
         {
             _items.Clear();
-            _items.AddRange(
-                _bookService.Book.Sheets
-                .Select(sheet => 
-                new SystemTrayItemsViewModel
-                { Name = sheet.Name
-                , Items = new BindableCollection<SystemTrayItemViewModel>(sheet.Rows.Select(row => new SystemTrayItemViewModel { Text = row.Text, ToolTip = row.MoreInfo, ToClipBoardCommand = new RelayCommand(o => true, o => _clipboardService.ToClipBoard(row.Text)) })) }));
-
-            _items.Add(
-                new SystemTrayItemsViewModel { Name = "Clipboard history", IconType = IconType.ClipBoard,
-                    Items = new BindableCollection<SystemTrayItemViewModel>(_clipboardService.Clips.Select(
-                        clip => new SystemTrayItemViewModel
-                        { Text = clip
-                        , ToolTip = clip
-                        , ToClipBoardCommand = new RelayCommand(o => true, o => _clipboardService.ToClipBoard(clip)) })) });
+            _items.AddRange(_bookService.Book.Sheets.Select(sheet => new SystemTrayItemsViewModel { Name = sheet.Name, Items = new BindableCollection<SystemTrayItemViewModel>(sheet.Rows.Where(row => row.Text.Count() > 0).Select(row => new SystemTrayItemViewModel { Text = row.Text, ToolTip = row.MoreInfo, ToClipBoardCommand = new RelayCommand(o => true, o => _clipboardService.ToClipBoard(row.Text)) })) }));
+            _items.Add(new SystemTrayItemsViewModel { Name = "Clipboard history", IconType = IconType.ClipBoard,Items = new BindableCollection<SystemTrayItemViewModel>(_clipboardService.Clips.Select(clip => new SystemTrayItemViewModel{ Text = clip, ToolTip = clip, ToClipBoardCommand = new RelayCommand(o => true, o => _clipboardService.ToClipBoard(clip)) })) });
         }
 
     }

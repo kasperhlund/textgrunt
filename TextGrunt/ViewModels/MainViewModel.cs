@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using Ninject;
 using System;
+using System.IO;
 using System.Windows.Input;
 using TextGrunt.Models;
 using TextGrunt.Services;
@@ -34,7 +35,7 @@ namespace TextGrunt.ViewModels
         public ICommand CloseCommand => new RelayCommand(o => true, o => TryClose());
         public ICommand ImportCommand => new RelayCommand(o => true, o => ImportFromFile());
         public ICommand ExportActiveCommand => new RelayCommand(o => HasActive(), o => ExportActive());
-        public ICommand OpenHelpCommand => new RelayCommand(o => true, o => System.Diagnostics.Process.Start($"help.txt"));
+        public ICommand OpenHelpCommand => new RelayCommand(o => File.Exists(HelpFilePath), o => System.Diagnostics.Process.Start(HelpFilePath));
         public bool IsClosed { get; set; }
 
         //
@@ -143,5 +144,7 @@ namespace TextGrunt.ViewModels
                 return;
             vm.DisplayName = newName;
         }
+
+        string HelpFilePath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "help.txt");
     }
 }

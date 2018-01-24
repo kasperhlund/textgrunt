@@ -8,7 +8,6 @@ using System.Windows;
 using TextGrunt.Messages;
 using TextGrunt.Services;
 using TextGrunt.ViewModels;
-using TextGrunt.Views;
 
 namespace TextGrunt
 {
@@ -37,7 +36,6 @@ namespace TextGrunt
             _kernel.Bind<IBookService>().To<BookService>().InSingletonScope();
             _kernel.Bind<IHandle<ToggleMainViewVisibleMessage>>().To<ToggleMainViewVisibleMessageHandler>().InSingletonScope();
             _kernel.Bind<IClipboardService>().To<ClipboardService>().InSingletonScope();
-
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
@@ -54,9 +52,6 @@ namespace TextGrunt
             _mainViewDisplayMessageHandler = _kernel.Get<IHandle<ToggleMainViewVisibleMessage>>();
             _bookService = _kernel.Get<IBookService>();
             DisplayRootViewFor<SystemTrayViewModel>();
-
-            //Now there is window so can register ClipBoardService
-
 
             if (!Environment.GetCommandLineArgs().Contains(CommandlineOnlyTrayBar))
                 _mainViewDisplayMessageHandler.Handle(new ToggleMainViewVisibleMessage() { Visible = true });

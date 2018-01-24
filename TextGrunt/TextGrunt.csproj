@@ -235,9 +235,7 @@
     <Resource Include="Assets\script-export.png" />
     <Resource Include="Assets\script-import.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ClipboardEvent\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Assets\scissors.png" />
   </ItemGroup>
