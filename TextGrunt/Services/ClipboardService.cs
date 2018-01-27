@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 using Caliburn.Micro;
@@ -44,7 +46,11 @@ namespace TextGrunt.Services
             if (!Clipboard.ContainsText() || !IsRecording)
                 return;
 
-            string newText = Clipboard.GetText();
+            if(!TryGetClipBoardText(10, 50, out string newText))
+            {
+                return;
+            }
+
             // only unique strings wanted
             while (Clips.Contains(newText))
                 Clips.Remove(newText);
@@ -67,6 +73,24 @@ namespace TextGrunt.Services
         public void ToClipBoard(string text)
         {
             Clipboard.SetDataObject(text);
+        }
+
+
+        // Sometimes get COMException in Clipboard.GetText()
+        bool TryGetClipBoardText(int retries, int delayMs, out string result)
+        {
+            for(int i=0; i< retries; i++)
+            {
+                try
+                {
+                    result = Clipboard.GetText();
+                    return true;
+                }
+                catch(COMException) {}
+                Thread.Sleep(delayMs);
+            }
+            result = null;
+            return false;
         }
     }
 }
