@@ -3,12 +3,13 @@ using Ninject;
 using System;
 using System.IO;
 using System.Windows.Input;
+using TextGrunt.Messages;
 using TextGrunt.Models;
 using TextGrunt.Services;
 
 namespace TextGrunt.ViewModels
 {
-    public class MainViewModel : Conductor<IShellTabItem>.Collection.OneActive
+    public class MainViewModel : Conductor<IShellTabItem>.Collection.OneActive, IHandle<MoveTabMessage>
     {
         private StandardKernel _kernel;
         private IDialogService _dialogService;
@@ -22,6 +23,7 @@ namespace TextGrunt.ViewModels
             _kernel = kernel;
             _dialogService = dialogService;
             _eventAggregator = eventAggregator;
+            _eventAggregator.Subscribe(this);
             DisplayName = "TextGrunt";
             _bookService = bookService;
             _storageService = storageService;
@@ -43,16 +45,19 @@ namespace TextGrunt.ViewModels
         //     Called when activating.
         protected override void OnActivate()
         {
-            foreach (var sheet in _bookService.Book.Sheets)
-            {
-                Display(sheet);
-            }
-
-            Items.Add(_kernel.Get<ClipboardViewModel>());
-
-
+            RefreshTabs();
             IsClosed = false;
             base.OnActivate();
+        }
+
+        void RefreshTabs()
+        {
+            Items.Clear();
+            foreach (var sheet in _bookService.Book.Sheets)
+            {
+                AddTab(sheet);
+            }
+            Items.Add(_kernel.Get<ClipboardViewModel>());
         }
 
         //
@@ -73,7 +78,8 @@ namespace TextGrunt.ViewModels
         {
             var sheet = _bookService.BuildNewSheet();
             _bookService.Book.Sheets.Add(sheet);
-            Display(sheet);
+            RefreshTabs();
+
         }
 
         private void ImportFromFile()
@@ -89,15 +95,14 @@ namespace TextGrunt.ViewModels
             }
 
             _bookService.Book.Sheets.Add(sheet);
-            Display(sheet);
+            RefreshTabs();
         }
 
-        private void Display(Sheet sheet)
+        private void AddTab(Sheet sheet)
         {
             var vm = _kernel.Get<TabViewModel>();
             vm.Sheet = sheet;
             Items.Add(vm);
-            ActiveItem = vm;
         }
 
         private void ExportActive()
@@ -143,6 +148,17 @@ namespace TextGrunt.ViewModels
             if (newName == null)
                 return;
             vm.DisplayName = newName;
+        }
+
+        public void Handle(MoveTabMessage message)
+        {
+            var sourceSheet = (message.Source as TabViewModel)?.Sheet;
+            var sheets = _bookService.Book.Sheets;
+            sheets.Remove(sourceSheet);
+            Items.Remove(message.Source);
+            var sheetInsertIndex = Items.IndexOf(message.Target);
+            sheets.Insert(sheetInsertIndex, sourceSheet);
+            RefreshTabs();
         }
 
         string HelpFilePath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "help.txt");

@@ -99,6 +99,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Messages\MoveTabMessage.cs" />
     <Compile Include="Services\ClipboardService.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Services\IClipboardService.cs" />
