@@ -3,9 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:localviews="clr-namespace:TextGrunt.Views"
              xmlns:local="clr-namespace:TextGrunt"
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="500">
     <Grid>
@@ -17,6 +15,7 @@
                     EnableRowVirtualization="False"
                     local:DataGridBehavior.DisplayRowNumber="True"
                     SelectionMode="Extended"
+                    SelectedIndex="{Binding SelectedIndex}"
                     SelectedItemsList="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     AutoGenerateColumns="False"
                     AlternatingRowBackground="LightGray"
@@ -62,19 +61,32 @@
             </DataGrid.Columns>
             <local:CustomDataGrid.ContextMenu>
                 <ContextMenu Focusable="False">
-                    <MenuItem Header="_Copy" Command="{Binding CopySelectedCommand}" Focusable="False" />
-                    <MenuItem Header="_Search (Google) this text in browser" Command="{Binding InternetSearchSelectedCommand}" Focusable="False" />
-                    <Separator />
-                    <MenuItem Header="Move _up" Command="{Binding MoveUpSelectedCommand}" Focusable="False" />
-                    <MenuItem Header="Move _down" Command="{Binding MoveDownSelectedCommand}" Focusable="False" />
-                    <MenuItem Header="_Remove" Command="{Binding RemoveSelectedCommand}" Focusable="False" />
-                    <Separator />
-                    <MenuItem Header="Comment" Command="{Binding CommentSelectedCommand}" Focusable="False" />
-                    <MenuItem Header="_Manipulate text" Focusable="False">
-                        <MenuItem Header="_Remove whitespace" Command="{Binding RemoveWhitespaceSelectedCommand}" Focusable="False" />
-                        <MenuItem Header="To _CAPS" Command="{Binding ToCapsCommand}" Focusable="False" />
-                        <MenuItem Header="To _lower" Command="{Binding ToLowerCommand}" Focusable="False" />
-                    </MenuItem>
+                            <MenuItem Header="_Copy" Command="{Binding CopySelectedCommand}" Focusable="False" />
+                            <MenuItem Header="_Search (Google) this text in browser" Command="{Binding InternetSearchSelectedCommand}" Focusable="False" />
+                            <Separator />
+                            <MenuItem Header="Move _up" Command="{Binding MoveUpSelectedCommand}" Focusable="False" />
+                            <MenuItem Header="Move _down" Command="{Binding MoveDownSelectedCommand}" Focusable="False" />
+                            <MenuItem Header="Move _to..." ItemsSource="{Binding MoveToTargets}" Focusable="False">
+                                <MenuItem.ItemContainerStyle>
+                                    <Style TargetType="{x:Type MenuItem}">
+                                        <Setter Property="Header" Value="{Binding Title}" />
+                                        <Setter Property="Command" Value="{Binding MoveCommand}" />
+                                        <Setter Property="Focusable" Value="False" />
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                                    </Style>
+                                </MenuItem.ItemContainerStyle>
+                            </MenuItem>
+                            <MenuItem Header="_Remove" Command="{Binding RemoveSelectedCommand}" Focusable="False" />
+                            <Separator />
+                            <MenuItem Header="Comment" Command="{Binding CommentSelectedCommand}" Focusable="False" />
+                            <MenuItem Header="_Manipulate text" Focusable="False">
+                                <MenuItem Header="_Remove whitespace" Command="{Binding RemoveWhitespaceSelectedCommand}" Focusable="False" />
+                                <MenuItem Header="To _CAPS" Command="{Binding ToCapsCommand}" Focusable="False" />
+                                <MenuItem Header="To _lower" Command="{Binding ToLowerCommand}" Focusable="False" />
+                            </MenuItem>
                 </ContextMenu>
             </local:CustomDataGrid.ContextMenu>
         </local:CustomDataGrid>

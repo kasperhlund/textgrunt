@@ -99,6 +99,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Messages\GoToMessage.cs" />
     <Compile Include="Messages\MoveTabMessage.cs" />
     <Compile Include="Services\ClipboardService.cs" />
     <Compile Include="NativeMethods.cs" />
@@ -106,10 +107,16 @@
     <Compile Include="Services\Model\IBookService.cs" />
     <Compile Include="ViewModels\ClipboardViewModel.cs" />
     <Compile Include="ViewModels\IHaveIcon.cs" />
+    <Compile Include="ViewModels\MoveRowViewModel.cs" />
+    <Compile Include="ViewModels\SearchResultViewModel.cs" />
+    <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\SystemTrayItemViewModels.cs" />
     <Compile Include="ViewModels\TabIconConverter.cs" />
     <Compile Include="Views\ClipboardView.xaml.cs">
       <DependentUpon>ClipboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchView.xaml.cs">
+      <DependentUpon>SearchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Wpf\CustomDataGrid.cs" />
     <Compile Include="Wpf\DataGridBehavior.cs" />
@@ -171,6 +178,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -253,6 +264,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\binocular.png" />
     <Content Include="Help.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

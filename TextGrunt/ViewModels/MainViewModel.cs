@@ -1,7 +1,9 @@
 ﻿using Caliburn.Micro;
 using Ninject;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Input;
 using TextGrunt.Messages;
 using TextGrunt.Models;
@@ -9,7 +11,7 @@ using TextGrunt.Services;
 
 namespace TextGrunt.ViewModels
 {
-    public class MainViewModel : Conductor<IShellTabItem>.Collection.OneActive, IHandle<MoveTabMessage>
+    public class MainViewModel : Conductor<IShellTabItem>.Collection.OneActive, IHandle<MoveTabMessage>, IHandle<GotoMessage>
     {
         private StandardKernel _kernel;
         private IDialogService _dialogService;
@@ -38,6 +40,7 @@ namespace TextGrunt.ViewModels
         public ICommand ImportCommand => new RelayCommand(o => true, o => ImportFromFile());
         public ICommand ExportActiveCommand => new RelayCommand(o => HasActive(), o => ExportActive());
         public ICommand OpenHelpCommand => new RelayCommand(o => File.Exists(HelpFilePath), o => System.Diagnostics.Process.Start(HelpFilePath));
+        public ICommand SearchCommand => new RelayCommand(o => _bookService.Book.Sheets.Any(), o => _dialogService.ShowSearch());
         public bool IsClosed { get; set; }
 
         //
@@ -159,6 +162,14 @@ namespace TextGrunt.ViewModels
             var sheetInsertIndex = Items.IndexOf(message.Target);
             sheets.Insert(sheetInsertIndex, sourceSheet);
             RefreshTabs();
+        }
+
+        public void Handle(GotoMessage message)
+        {
+            var targetItem = Items.FirstOrDefault(item => item is TabViewModel && (item as TabViewModel).Sheet == message.TargetSheet) as TabViewModel;
+            ActivateItem(targetItem);
+
+            targetItem.SelectedIndex = targetItem.Sheet.Rows.IndexOf(message.TargetRow);
         }
 
         string HelpFilePath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "help.txt");

@@ -32,6 +32,8 @@
                     <Separator />
                     <MenuItem Header="Import tab..." Command="{Binding ImportCommand}" />
                     <MenuItem Header="Export active tab..." Command="{Binding ExportActiveCommand}" />
+                    <Separator />
+                    <MenuItem Header="Search in tabs..." Command="{Binding SearchCommand}" />
                 </MenuItem>
                 <MenuItem Header="_Help">
                     <MenuItem Header="_Open Help.txt" Command="{Binding OpenHelpCommand}" />
@@ -55,6 +57,10 @@
             </Button>
             <Button ToolTip="Export active tab..." Command="{Binding ExportActiveCommand}">
                 <Image Source="../Assets/script-export.png" />
+            </Button>
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+            <Button ToolTip="Search in tabs..." Command="{Binding SearchCommand}">
+                <Image Source="../Assets/binocular.png" />
             </Button>
         </StackPanel>
         <TabControl Grid.Row="2" Name="Items">

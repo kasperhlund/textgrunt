@@ -16,11 +16,13 @@ namespace TextGrunt.ViewModels
         private Sheet _sheet;
         private IList _selected;
         private IClipboardService _clipboardService;
+        private IBookService _bookService;
 
-        public TabViewModel(IDialogService dialogService, IClipboardService clipboardService)
+        public TabViewModel(IDialogService dialogService, IClipboardService clipboardService, IBookService bookService)
         {
             _dialogService = dialogService;
             _clipboardService = clipboardService;
+            _bookService = bookService;
         }
 
         public Sheet Sheet
@@ -44,9 +46,6 @@ namespace TextGrunt.ViewModels
             }
         }
 
-
-
-
         public IList Selected
         {
             get { return _selected; }
@@ -57,6 +56,17 @@ namespace TextGrunt.ViewModels
                 NotifyOfPropertyChange();
             }
         }
+
+        private int _selectedIndex;
+        public int SelectedIndex
+        {
+            get { return _selectedIndex; }
+            set { _selectedIndex = value; NotifyOfPropertyChange(); }
+        }
+
+
+        public IEnumerable<MoveRowViewModel> MoveToTargets => _bookService.Book.Sheets.Where(sheet => sheet != Sheet)
+                    .Select(sheet => new MoveRowViewModel { Title = sheet.Name, MoveCommand = new RelayCommand((o) => CountSelected() > 0, (o) => MoveSelectedRowsToOtherSheet(sheet)) });
 
         public ICommand MoveUpSelectedCommand => new RelayCommand(e => CountSelected() == 1, e => MoveUpSelected());
         public ICommand MoveDownSelectedCommand => new RelayCommand(e => CountSelected() == 1, e => MoveDownSelected());
@@ -117,6 +127,15 @@ namespace TextGrunt.ViewModels
             foreach (Row item in Selected)
             {
                 item.Text = item.Text.ToLower();
+            }
+        }
+
+        private void MoveSelectedRowsToOtherSheet(Sheet target)
+        {
+            foreach (Row item in Selected)
+            {
+                Sheet.Rows.Remove(item);
+                target.Rows.Add(item);
             }
         }
 

@@ -10,13 +10,15 @@ namespace TextGrunt.Services
     {
         private IWindowManager _windowManager;
         private OptionsViewModel _optionsViewModel;
+        private SearchViewModel _searchViewModel;
 
         private const string GruntTabFiles = "TextGrunt tab files (*.tgtab)|*.tgtab|All files (*.*)|*.*";
 
-        public DialogService(IWindowManager windowManager, OptionsViewModel optionsViewModel)
+        public DialogService(IWindowManager windowManager, OptionsViewModel optionsViewModel, SearchViewModel searchViewModel)
         {
             _windowManager = windowManager;
             _optionsViewModel = optionsViewModel;
+            _searchViewModel = searchViewModel;
         }
 
         public string GetUserTextInput(string header, string question, string initialResponse = "", bool isMultiline = true)
@@ -93,6 +95,17 @@ namespace TextGrunt.Services
         public bool ShowOkCancel(string text)
         {
             return MessageBox.Show(text, "Question", MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.Cancel) == MessageBoxResult.OK;
+        }
+
+        public void ShowSearch()
+        {
+            dynamic settings = new ExpandoObject();
+            settings.WindowStyle = WindowStyle.ToolWindow;
+            settings.ShowInTaskbar = false;
+            settings.Title = "Search";
+            settings.ResizeMode = ResizeMode.NoResize;
+
+            _windowManager.ShowDialog(_searchViewModel, null, settings);
         }
     }
 }

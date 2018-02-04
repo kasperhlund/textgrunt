@@ -1,0 +1,106 @@
+﻿<UserControl x:Class="TextGrunt.Views.SearchView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="400" Width="400" Height="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <TextBox Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <TextBlock Grid.Row="2" Grid.Column="1">Comments</TextBlock>
+        <CheckBox IsChecked="{Binding ShouldSearchComments}" Grid.Row="2" Grid.Column="2"/>
+        <TextBlock Grid.Row="3" Grid.Column="1">Text</TextBlock>
+        <CheckBox IsChecked="{Binding ShouldSearchText}" Grid.Row="3" Grid.Column="2"/>
+        <TextBlock Grid.Row="4" Grid.Column="1">Ignore case</TextBlock>
+        <CheckBox IsChecked="{Binding ShouldIgnoreCase}" Grid.Row="4" Grid.Column="2"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">
+            <Button Command="{Binding SearchCommand}">
+                <StackPanel Orientation="Horizontal">
+                <Image Source="../Assets/binocular.png" />
+                    <TextBlock>Search</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <Separator Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" />
+        <ListView Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding Result}">
+            <ListView.Resources>
+                <Style TargetType="{x:Type GridViewColumnHeader}">
+                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Tab">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Sheet.Name}">
+                                    <TextBlock.ContextMenu>
+                                        <ContextMenu Focusable="False">
+                                            <MenuItem Focusable="False" Header="Go here" Command="{Binding GoHereCommand}" />
+                                        </ContextMenu>
+                                    </TextBlock.ContextMenu>
+                                    <TextBlock.InputBindings>
+                                        <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding GoHereCommand}" />
+                                    </TextBlock.InputBindings>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Rows">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListBox ItemsSource="{Binding Matches}">
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListBoxItem}">
+                                            <Setter Property="ContentTemplate">
+                                                <Setter.Value>
+                                                    <DataTemplate>
+                                                        <StackPanel>
+                                                            <StackPanel.ContextMenu>
+                                                                <ContextMenu Focusable="False">
+                                                                    <MenuItem Focusable="False" Header="Go here" Command="{Binding GoHereCommand}" />
+                                                                </ContextMenu>
+                                                            </StackPanel.ContextMenu>
+                                                            <StackPanel.InputBindings>
+                                                                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding GoHereCommand}" />
+                                                            </StackPanel.InputBindings>
+                                                            <TextBlock Text="{Binding Row.Text, StringFormat='Text: {0}'}" />
+                                                            <TextBlock Text="{Binding Row.Comment, StringFormat='Comment: {0}'}" />
+
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="HorizontalAlignment" Value="Left" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+            
+        </ListView>
+    </Grid>
+</UserControl>

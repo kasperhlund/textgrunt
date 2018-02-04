@@ -10,6 +10,8 @@
 
         void ShowError(string text);
 
+        void ShowSearch();
+
         bool ShowOkCancel(string text);
 
         void ShowAbout();
