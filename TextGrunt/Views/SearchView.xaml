@@ -23,7 +23,11 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="10" />
         </Grid.ColumnDefinitions>
-        <TextBox Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <TextBox Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Return" Command="{Binding SearchCommand}" />
+            </TextBox.InputBindings>
+        </TextBox>
         <TextBlock Grid.Row="2" Grid.Column="1">Comments</TextBlock>
         <CheckBox IsChecked="{Binding ShouldSearchComments}" Grid.Row="2" Grid.Column="2"/>
         <TextBlock Grid.Row="3" Grid.Column="1">Text</TextBlock>
@@ -83,7 +87,6 @@
                                                             </StackPanel.InputBindings>
                                                             <TextBlock Text="{Binding Row.Text, StringFormat='Text: {0}'}" />
                                                             <TextBlock Text="{Binding Row.Comment, StringFormat='Comment: {0}'}" />
-
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </Setter.Value>
