@@ -23,9 +23,9 @@ namespace TextGrunt.Services
         public void Handle(ToggleMainViewVisibleMessage message)
         {
             dynamic settings = new ExpandoObject();
-            settings.WindowStyle = WindowStyle.ToolWindow;
+            settings.WindowStyle = WindowStyle.ThreeDBorderWindow;
             settings.ShowInTaskbar = true;
-            settings.ResizeMode = ResizeMode.NoResize;
+            settings.ResizeMode = ResizeMode.CanMinimize;
             settings.Icon = new BitmapImage(new Uri("pack://application:,,,/../Assets/Textgrunt.ico"));
 
             if (message.Visible && _mainViewModel.IsClosed)

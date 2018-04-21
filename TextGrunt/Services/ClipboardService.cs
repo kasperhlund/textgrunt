@@ -43,7 +43,7 @@ namespace TextGrunt.Services
 
         void OnClipboardChanged()
         {
-            if (!Clipboard.ContainsText() || !IsRecording)
+            if (!IsRecording)
                 return;
 
             if(!TryGetClipBoardText(10, 50, out string newText))
@@ -76,15 +76,21 @@ namespace TextGrunt.Services
         }
 
 
-        // Sometimes get COMException in Clipboard.GetText()
+        // Sometimes get COMException in Clipboard
         bool TryGetClipBoardText(int retries, int delayMs, out string result)
         {
             for(int i=0; i< retries; i++)
             {
                 try
                 {
-                    result = Clipboard.GetText();
-                    return true;
+                    if (Clipboard.ContainsText())
+                    {
+                        result = Clipboard.GetText();
+                        return true;
+                    }
+                    result = "";
+                    return false;
+
                 }
                 catch(COMException) {}
                 Thread.Sleep(delayMs);
