@@ -55,7 +55,7 @@ namespace TextGrunt.Services
             while (Clips.Contains(newText))
                 Clips.Remove(newText);
             // put clip on top of list
-            Clips.Insert(0, Clipboard.GetText());
+            Clips.Insert(0, newText);
             while (Clips.Count > _maxSize)
                 Clips.RemoveAt(Clips.Count - 1);
         }
