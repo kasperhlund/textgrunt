@@ -16,7 +16,7 @@
         Visibility="Hidden" SizeToContent="Width">
     <Window.Resources>
         <vm:TabIconConverter x:Key="TabIconConverter" />
-        
+
         <!-- The taskbar context menu -->
         <!--
         The "shared" directive is needed if we reopen the sample window a few times - WPF will otherwise
@@ -46,7 +46,6 @@
                 </CompositeCollection>
             </ContextMenu.ItemsSource>
         </ContextMenu>
-
 
         <!-- the application main system tray icon -->
         <tb:TaskbarIcon x:Key="SystemTrayIcon"

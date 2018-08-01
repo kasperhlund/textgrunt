@@ -12,17 +12,16 @@ namespace TextGrunt.Views
     /// </summary>
     public partial class MainView : UserControl
     {
-        IEventAggregator _eventAggregator;
+        private IEventAggregator _eventAggregator;
 
         public MainView(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
 
             InitializeComponent();
-
         }
 
-        void TabItem_PreviewMouseMove(object sender, MouseEventArgs e)
+        private void TabItem_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             var tabItem = e.Source as TabItem;
 
@@ -35,8 +34,7 @@ namespace TextGrunt.Views
             }
         }
 
-
-        void TabItem_Drop(object sender, DragEventArgs e)
+        private void TabItem_Drop(object sender, DragEventArgs e)
         {
             var target = (e.Source as TabItem)?.Content as IShellTabItem;
             var source = (e.Data.GetData(typeof(TabItem)) as TabItem)?.Content as IShellTabItem;
@@ -46,6 +44,5 @@ namespace TextGrunt.Views
 
             _eventAggregator.PublishOnUIThread(new MoveTabMessage { Source = source, Target = target });
         }
-
     }
 }

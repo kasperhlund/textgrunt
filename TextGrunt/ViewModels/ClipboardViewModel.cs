@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using Caliburn.Micro;
 using System.Windows.Input;
-using Caliburn.Micro;
 using TextGrunt.Services;
 
 namespace TextGrunt.ViewModels
 {
     public class ClipboardViewModel : Screen, IShellTabItem, IHaveIcon
     {
-        const int _maxSize = 100;
-        IClipboardService _clipboardService;
+        private const int _maxSize = 100;
+        private IClipboardService _clipboardService;
 
         public ClipboardViewModel(IClipboardService clipboardService)
         {
@@ -23,7 +15,7 @@ namespace TextGrunt.ViewModels
             _clipboardService = clipboardService;
         }
 
-        public BindableCollection<string> Clips => _clipboardService.Clips; 
+        public BindableCollection<string> Clips => _clipboardService.Clips;
 
         public string SelectedItem { get; set; }
         public ICommand CopyCommand => new RelayCommand(o => SelectedItem != null, o => _clipboardService.ToClipBoard(SelectedItem));

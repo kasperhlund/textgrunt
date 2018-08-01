@@ -2,20 +2,21 @@
 using System;
 using System.Timers;
 using TextGrunt.Models;
-using static TextGrunt.Services.FileLocations;
 
 namespace TextGrunt.Services
 {
     public class BookService : IBookService, IDisposable
     {
         private IStorageService _storageService;
+        private IOptionsService _optionsService;
         private Timer _saveTimer;
         private Book _book;
         private bool _isDirty;
 
-        public BookService(IStorageService storageService)
+        public BookService(IStorageService storageService, IOptionsService optionsService)
         {
             _storageService = storageService;
+            _optionsService = optionsService;
             InitBook();
             _saveTimer = new Timer(TimeSpan.FromSeconds(5).TotalMilliseconds);
             _saveTimer.Elapsed += (s, e) => OnTimerElapsed();
@@ -24,7 +25,7 @@ namespace TextGrunt.Services
 
         private void InitBook()
         {
-            Book = _storageService.Read<Book>(BookLocation);
+            Book = _storageService.Read<Book>(_optionsService.Current.DataFilePath);
             if (Book == null)
             {
                 Book = BuildNewBook();
@@ -35,7 +36,7 @@ namespace TextGrunt.Services
         public Book Book
         {
             get => _book;
-            private set
+            set
             {
                 if (_book != null)
                     _book.BookModifiedEvent -= OnBookModified;
@@ -55,7 +56,7 @@ namespace TextGrunt.Services
             if (!_isDirty)
                 return;
 
-            _storageService.Write(Book, BookLocation);
+            _storageService.Write(Book, _optionsService.Current.DataFilePath);
             _isDirty = false;
         }
 
@@ -82,7 +83,7 @@ namespace TextGrunt.Services
         public void Dispose()
         {
             _saveTimer.Dispose();
-            _storageService.Write(Book, BookLocation);
+            _storageService.Write(Book, _optionsService.Current.DataFilePath);
         }
 
         private void AddTutorial()

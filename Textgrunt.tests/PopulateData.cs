@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Textgrunt.tests
 {
@@ -14,17 +12,13 @@ namespace Textgrunt.tests
         [TestMethod]
         public void LotsofTextToClipBoard()
         {
-            for(int i = 0; i < 150; i++)
+            for (int i = 0; i < 150; i++)
             {
-
                 Thread t = new Thread(() => Clipboard.SetDataObject($"Clip {i}"));
                 t.SetApartmentState(ApartmentState.STA);
                 t.Start();
                 Thread.Sleep(100);
             }
         }
-
-
-
     }
 }

@@ -1,20 +1,17 @@
 ﻿using Caliburn.Micro;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Input;
-using TextGrunt.Messages;
-using TextGrunt.Models;
-using TextGrunt.Services;
 using System.Linq;
+using System.Windows;
+using TextGrunt.Messages;
+using TextGrunt.Services;
 
 namespace TextGrunt.ViewModels
 {
     public class SystemTrayViewModel : Screen
     {
-        IEventAggregator _eventAggregator;
-        IBookService _bookService;
-        IClipboardService _clipboardService;
-        BindableCollection<SystemTrayItemsViewModel> _items;
+        private IEventAggregator _eventAggregator;
+        private IBookService _bookService;
+        private IClipboardService _clipboardService;
+        private BindableCollection<SystemTrayItemsViewModel> _items;
 
         public SystemTrayViewModel(IEventAggregator eventAggregator, IBookService bookService, IClipboardService clipboardService)
         {
@@ -69,12 +66,11 @@ namespace TextGrunt.ViewModels
             Application.Current.Shutdown();
         }
 
-        void PopulateItems()
+        private void PopulateItems()
         {
             _items.Clear();
             _items.AddRange(_bookService.Book.Sheets.Select(sheet => new SystemTrayItemsViewModel { Name = sheet.Name, Items = new BindableCollection<SystemTrayItemViewModel>(sheet.Rows.Where(row => row.Text.Count() > 0).Select(row => new SystemTrayItemViewModel { Text = row.Text, ToolTip = row.MoreInfo, ToClipBoardCommand = new RelayCommand(o => true, o => _clipboardService.ToClipBoard(row.Text)) })) }));
-            _items.Add(new SystemTrayItemsViewModel { Name = "Clipboard history", IconType = IconType.ClipBoard,Items = new BindableCollection<SystemTrayItemViewModel>(_clipboardService.Clips.Select(clip => new SystemTrayItemViewModel{ Text = clip, ToolTip = clip, ToClipBoardCommand = new RelayCommand(o => true, o => _clipboardService.ToClipBoard(clip)) })) });
+            _items.Add(new SystemTrayItemsViewModel { Name = "Clipboard history", IconType = IconType.ClipBoard, Items = new BindableCollection<SystemTrayItemViewModel>(_clipboardService.Clips.Select(clip => new SystemTrayItemViewModel { Text = clip, ToolTip = clip, ToClipBoardCommand = new RelayCommand(o => true, o => _clipboardService.ToClipBoard(clip)) })) });
         }
-
     }
 }

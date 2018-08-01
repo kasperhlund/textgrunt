@@ -21,6 +21,8 @@
         <DockPanel Grid.Row="0">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
+                    <MenuItem Header="Open..." Command="{Binding OpenCommand}" />
+                    <MenuItem Header="Save as..." Command="{Binding SaveAsCommand}" />
                     <MenuItem Header="Options..." Command="{Binding OptionsCommand}" />
                     <Separator />
                     <MenuItem Header="_Close" Command="{Binding CloseCommand}" />
@@ -66,9 +68,9 @@
         <TabControl Grid.Row="2" Name="Items">
             <TabControl.Resources>
                 <Style TargetType="TabItem">
-                    <Setter Property="AllowDrop" Value="True"/>
-                    <EventSetter Event="PreviewMouseMove" Handler="TabItem_PreviewMouseMove"/>
-                    <EventSetter Event="Drop" Handler="TabItem_Drop"/>
+                    <Setter Property="AllowDrop" Value="True" />
+                    <EventSetter Event="PreviewMouseMove" Handler="TabItem_PreviewMouseMove" />
+                    <EventSetter Event="Drop" Handler="TabItem_Drop" />
                 </Style>
             </TabControl.Resources>
             <TabControl.ItemTemplate>

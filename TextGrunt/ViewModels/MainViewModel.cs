@@ -1,7 +1,6 @@
 ﻿using Caliburn.Micro;
 using Ninject;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
@@ -18,17 +17,18 @@ namespace TextGrunt.ViewModels
         private IStorageService _storageService;
         private IEventAggregator _eventAggregator;
         private IBookService _bookService;
+        private IOptionsService _optionsService;
 
-        public MainViewModel(StandardKernel kernel, IDialogService dialogService, IEventAggregator eventAggregator, IBookService bookService, IStorageService storageService)
+        public MainViewModel(StandardKernel kernel, IDialogService dialogService, IEventAggregator eventAggregator, IBookService bookService, IStorageService storageService, IOptionsService optionsService)
         {
             IsClosed = true;
             _kernel = kernel;
             _dialogService = dialogService;
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this);
-            DisplayName = "TextGrunt";
             _bookService = bookService;
             _storageService = storageService;
+            _optionsService = optionsService;
         }
 
         public ICommand NewTabCommand => new RelayCommand(o => true, o => AddNewTab());
@@ -37,10 +37,12 @@ namespace TextGrunt.ViewModels
         public ICommand RemoveActiveCommand => new RelayCommand(o => HasActive(), o => AskAndRemoveActive());
         public ICommand RenameActiveCommand => new RelayCommand(o => HasActive(), o => AskAndRenameActive());
         public ICommand CloseCommand => new RelayCommand(o => true, o => TryClose());
-        public ICommand ImportCommand => new RelayCommand(o => true, o => ImportFromFile());
-        public ICommand ExportActiveCommand => new RelayCommand(o => HasActive(), o => ExportActive());
+        public ICommand ImportCommand => new RelayCommand(o => true, o => ImportTab());
+        public ICommand ExportActiveCommand => new RelayCommand(o => HasActive(), o => ExportActiveTab());
         public ICommand OpenHelpCommand => new RelayCommand(o => File.Exists(HelpFilePath), o => System.Diagnostics.Process.Start(HelpFilePath));
         public ICommand SearchCommand => new RelayCommand(o => _bookService.Book.Sheets.Any(), o => _dialogService.ShowSearch());
+        public ICommand OpenCommand => new RelayCommand(o => true, o => OpenBook());
+        public ICommand SaveAsCommand => new RelayCommand(o => true, o => SaveBookAs());
         public bool IsClosed { get; set; }
 
         //
@@ -49,11 +51,12 @@ namespace TextGrunt.ViewModels
         protected override void OnActivate()
         {
             RefreshTabs();
+            RefreshTitle();
             IsClosed = false;
             base.OnActivate();
         }
 
-        void RefreshTabs()
+        private void RefreshTabs()
         {
             Items.Clear();
             foreach (var sheet in _bookService.Book.Sheets)
@@ -82,12 +85,11 @@ namespace TextGrunt.ViewModels
             var sheet = _bookService.BuildNewSheet();
             _bookService.Book.Sheets.Add(sheet);
             RefreshTabs();
-
         }
 
-        private void ImportFromFile()
+        private void ImportTab()
         {
-            string path = _dialogService.GetUserFileOpenInput();
+            string path = _dialogService.GetUserFileOpenInput(Files.GruntTabFileFilter);
             if (path == null)
                 return;
             var sheet = _storageService.Read<Sheet>(path);
@@ -108,9 +110,9 @@ namespace TextGrunt.ViewModels
             Items.Add(vm);
         }
 
-        private void ExportActive()
+        private void ExportActiveTab()
         {
-            string path = _dialogService.GetUserFileSaveInput();
+            string path = _dialogService.GetUserFileSaveInput(Files.GruntTabFileFilter);
             if (path == null)
                 return;
 
@@ -153,6 +155,46 @@ namespace TextGrunt.ViewModels
             vm.DisplayName = newName;
         }
 
+        private void OpenBook()
+        {
+            string path = _dialogService.GetUserFileOpenInput(Files.GruntBookFileFilter);
+            if (path == null)
+                return;
+            var book = _storageService.Read<Book>(path);
+            if (book == null)
+            {
+                _dialogService.ShowError($"Unable to open {path}.");
+                return;
+            }
+
+            _bookService.Book = book;
+            _optionsService.Current.DataFilePath = path;
+            RefreshTabs();
+            RefreshTitle();
+        }
+
+        private void SaveBookAs()
+        {
+            string path = _dialogService.GetUserFileSaveInput(Files.GruntBookFileFilter);
+            if (path == null)
+                return;
+
+            if (!_storageService.Write(_bookService.Book, path))
+            {
+                _dialogService.ShowError($"Can't save to {path}");
+            }
+            else
+            {
+                _optionsService.Current.DataFilePath = path;
+                RefreshTitle();
+            }
+        }
+
+        private void RefreshTitle()
+        {
+            DisplayName = $"TextGrunt ({_optionsService.Current.DataFilePath})";
+        }
+
         public void Handle(MoveTabMessage message)
         {
             var sourceSheet = (message.Source as TabViewModel)?.Sheet;
@@ -172,6 +214,6 @@ namespace TextGrunt.ViewModels
             targetItem.SelectedIndex = targetItem.Sheet.Rows.IndexOf(message.TargetRow);
         }
 
-        string HelpFilePath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "help.txt");
+        private string HelpFilePath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "help.txt");
     }
 }

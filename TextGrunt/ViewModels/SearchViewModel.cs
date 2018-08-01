@@ -1,9 +1,5 @@
 ﻿using Caliburn.Micro;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using TextGrunt.Messages;
 using TextGrunt.Models;
@@ -13,12 +9,12 @@ namespace TextGrunt.ViewModels
 {
     public class SearchViewModel : Screen
     {
-        IBookService _bookService;
-        IEventAggregator _eventAggregator;
-        string _searchString;
-        bool _shouldSearchComments;
-        bool _shouldSearchText;
-        bool _shouldIgnoreCase;
+        private IBookService _bookService;
+        private IEventAggregator _eventAggregator;
+        private string _searchString;
+        private bool _shouldSearchComments;
+        private bool _shouldSearchText;
+        private bool _shouldIgnoreCase;
 
         public SearchViewModel(IBookService bookService, IEventAggregator eventAggregator)
         {
@@ -29,6 +25,7 @@ namespace TextGrunt.ViewModels
             ShouldIgnoreCase = true;
             Result = new BindableCollection<SearchResultViewModel>();
         }
+
         public string SearchString
         {
             get => _searchString;
@@ -50,6 +47,7 @@ namespace TextGrunt.ViewModels
                 NotifyOfPropertyChange();
             }
         }
+
         public bool ShouldSearchText
         {
             get => _shouldSearchText;
@@ -60,7 +58,6 @@ namespace TextGrunt.ViewModels
                 NotifyOfPropertyChange();
             }
         }
-
 
         public bool ShouldIgnoreCase
         {
@@ -80,10 +77,10 @@ namespace TextGrunt.ViewModels
 
         public ICommand SearchCommand => new RelayCommand((o) => SearchString?.Length > 0 && (ShouldSearchComments || ShouldSearchText), (o) => DoSearch());
 
-        void DoSearch()
+        private void DoSearch()
         {
             Result.Clear();
-            foreach(var sheet in _bookService.Book.Sheets)
+            foreach (var sheet in _bookService.Book.Sheets)
             {
                 var sheetResult = sheet.Rows.Where(row => IsMatch(row))
                     .Select(row => new SearchResultRowViewModel { Row = row, GoHereCommand = new RelayCommand(o => true, o => GoHere(sheet, row)) });
@@ -92,13 +89,13 @@ namespace TextGrunt.ViewModels
             }
         }
 
-        bool IsMatch(Row row)
+        private bool IsMatch(Row row)
         {
             return (ShouldSearchText && !ShouldIgnoreCase && row.Text.Contains(SearchString) || ShouldSearchComments && !ShouldIgnoreCase && row.Comment.Contains(SearchString))
                 || (ShouldSearchText && ShouldIgnoreCase && row.Text.ToLower().Contains(SearchString.ToLower()) || ShouldSearchComments && ShouldIgnoreCase && row.Comment.ToLower().Contains(SearchString.ToLower()));
         }
 
-        void GoHere(Sheet targetSheet, Row targetRow = null)
+        private void GoHere(Sheet targetSheet, Row targetRow = null)
         {
             _eventAggregator.PublishOnUIThread(new GotoMessage { TargetSheet = targetSheet, TargetRow = targetRow });
         }

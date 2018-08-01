@@ -4,9 +4,9 @@
     {
         string GetUserTextInput(string header, string question, string initialResponse, bool isMultiline = true);
 
-        string GetUserFileOpenInput();
+        string GetUserFileOpenInput(string filter);
 
-        string GetUserFileSaveInput();
+        string GetUserFileSaveInput(string filter);
 
         void ShowError(string text);
 

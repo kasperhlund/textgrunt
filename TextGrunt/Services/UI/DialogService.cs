@@ -12,8 +12,6 @@ namespace TextGrunt.Services
         private OptionsViewModel _optionsViewModel;
         private SearchViewModel _searchViewModel;
 
-        private const string GruntTabFiles = "TextGrunt tab files (*.tgtab)|*.tgtab|All files (*.*)|*.*";
-
         public DialogService(IWindowManager windowManager, OptionsViewModel optionsViewModel, SearchViewModel searchViewModel)
         {
             _windowManager = windowManager;
@@ -37,12 +35,12 @@ namespace TextGrunt.Services
             return null;
         }
 
-        public string GetUserFileOpenInput()
+        public string GetUserFileOpenInput(string filter)
         {
             OpenFileDialog dialog = new OpenFileDialog()
             {
                 Multiselect = false,
-                Filter = GruntTabFiles,
+                Filter = filter,
             };
 
             if (dialog.ShowDialog() == true)
@@ -51,11 +49,11 @@ namespace TextGrunt.Services
             return null;
         }
 
-        public string GetUserFileSaveInput()
+        public string GetUserFileSaveInput(string filter)
         {
             SaveFileDialog dialog = new SaveFileDialog()
             {
-                Filter = GruntTabFiles
+                Filter = filter
             };
 
             if (dialog.ShowDialog() == true)

@@ -48,7 +48,5 @@ namespace TextGrunt.ViewModels
         public bool ShouldAcceptReturn => _isMultiline;
 
         public int InitialHeight => _isMultiline ? 200 : 20;
-
-
     }
 }

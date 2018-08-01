@@ -26,6 +26,7 @@ namespace TextGrunt.Services
         public Options Default => new Options
         {
             HasAutoStart = true,
+            DataFilePath = Files.BookLocation
         };
 
         private string DefaultSettingsLocation

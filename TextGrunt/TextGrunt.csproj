@@ -128,7 +128,7 @@
     <Compile Include="Models\Sheet.cs" />
     <Compile Include="Wpf\RelayCommand.cs" />
     <Compile Include="Services\Model\BookService.cs" />
-    <Compile Include="Services\Model\Helpers\DefaultFileLocations.cs" />
+    <Compile Include="Services\Model\Helpers\Files.cs" />
     <Compile Include="Services\UI\DialogService.cs" />
     <Compile Include="Services\UI\IDialogService.cs" />
     <Compile Include="Services\Model\IOptionsService.cs" />

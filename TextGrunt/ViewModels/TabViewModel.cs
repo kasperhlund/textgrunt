@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Windows;
 using System.Windows.Input;
 using TextGrunt.Models;
 using TextGrunt.Services;
@@ -58,12 +57,12 @@ namespace TextGrunt.ViewModels
         }
 
         private int _selectedIndex;
+
         public int SelectedIndex
         {
             get { return _selectedIndex; }
             set { _selectedIndex = value; NotifyOfPropertyChange(); }
         }
-
 
         public IEnumerable<MoveRowViewModel> MoveToTargets => _bookService.Book.Sheets.Where(sheet => sheet != Sheet)
                     .Select(sheet => new MoveRowViewModel { Title = sheet.Name, MoveCommand = new RelayCommand((o) => CountSelected() > 0, (o) => MoveSelectedRowsToOtherSheet(sheet)) });

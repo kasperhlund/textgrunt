@@ -1,30 +1,29 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
-using Caliburn.Micro;
 
 namespace TextGrunt.Services
 {
     // low level code from: https://stackoverflow.com/questions/621577/clipboard-event-c-sharp
-    // Need to Initiate() with a window 
+    // Need to Initiate() with a window
     public class ClipboardService : IClipboardService
     {
-        readonly int _maxSize;
+        private readonly int _maxSize;
+
         public ClipboardService()
         {
             IsRecording = false;
             Clips = new BindableCollection<string>();
             _maxSize = 100;
         }
-        
-
 
         public void Initiate(Window windowSource)
         {
             HwndSource source = PresentationSource.FromVisual(windowSource) as HwndSource;
-            if(source == null)
+            if (source == null)
                 throw new ArgumentException("Window source MUST be initialized first, such as in the Window's OnSourceInitialized handler.");
 
             source.AddHook(WndProc);
@@ -36,17 +35,16 @@ namespace TextGrunt.Services
             IsRecording = true;
         }
 
-
         public BindableCollection<string> Clips { get; set; }
 
         public bool IsRecording { get; set; }
 
-        void OnClipboardChanged()
+        private void OnClipboardChanged()
         {
             if (!IsRecording)
                 return;
 
-            if(!TryGetClipBoardText(10, 50, out string newText))
+            if (!TryGetClipBoardText(10, 50, out string newText))
             {
                 return;
             }
@@ -59,7 +57,8 @@ namespace TextGrunt.Services
             while (Clips.Count > _maxSize)
                 Clips.RemoveAt(Clips.Count - 1);
         }
-        IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == NativeMethods.WM_CLIPBOARDUPDATE)
             {
@@ -75,11 +74,10 @@ namespace TextGrunt.Services
             Clipboard.SetDataObject(text);
         }
 
-
         // Sometimes get COMException in Clipboard
-        bool TryGetClipBoardText(int retries, int delayMs, out string result)
+        private bool TryGetClipBoardText(int retries, int delayMs, out string result)
         {
-            for(int i=0; i< retries; i++)
+            for (int i = 0; i < retries; i++)
             {
                 try
                 {
@@ -90,9 +88,8 @@ namespace TextGrunt.Services
                     }
                     result = "";
                     return false;
-
                 }
-                catch(COMException) {}
+                catch (COMException) { }
                 Thread.Sleep(delayMs);
             }
             result = null;

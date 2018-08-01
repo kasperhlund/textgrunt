@@ -4,7 +4,7 @@ namespace TextGrunt.Services
 {
     public interface IBookService
     {
-        Book Book { get; }
+        Book Book { get; set; }
 
         Sheet BuildNewSheet();
     }

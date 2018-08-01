@@ -1,8 +1,6 @@
 ﻿using Caliburn.Micro;
 using Newtonsoft.Json;
 using System;
-using System.Windows;
-using System.Windows.Input;
 
 namespace TextGrunt.Models
 {
