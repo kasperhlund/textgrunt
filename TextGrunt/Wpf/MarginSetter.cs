@@ -4,7 +4,7 @@ using System.Windows.Controls;
 namespace TextGrunt
 {
     //http://blogs.microsoft.co.il/eladkatz/2011/05/29/what-is-the-easiest-way-to-set-spacing-between-items-in-stackpanel/
-    public class MarginSetter
+    public static class MarginSetter
 
     {
         public static Thickness GetMargin(DependencyObject obj)

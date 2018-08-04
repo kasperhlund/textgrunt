@@ -12,8 +12,8 @@ To add/edit texts open the main view by double clicking the TextGrunt traybar ic
 To copy text to clipboard either use main view or right click textgrunt traybar icon and then click on the text to copy.
 
 Textgrunt also keeps track of text being added to the Windows clipboard from other applications in the "Clipboard history" tab. 
-These texts NOT saved to disk, and will be removed when exiting the application.
 There is a maximum of 100 texts in this tab. Once 100 is reached it will start removing old entries.
+Clipboard entries are not saved to disk and will be removed when exiting application.
 
-User data is stored in %appdata%\TextGrunt (Usually: C:\Users\<MyUserName>\AppData\Roaming\TextGrunt)
-Note that user data is stored in a fairly readable format (json), so dont save sensitive data.
+Default workbook is stored in %appdata%\TextGrunt (Usually: C:\Users\<MyUserName>\AppData\Roaming\TextGrunt)
+Change workbook and/or location by File -> Open... or File -> Save as...

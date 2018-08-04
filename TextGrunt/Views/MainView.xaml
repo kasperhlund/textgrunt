@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:TextGrunt.Views"
+             xmlns:local="clr-namespace:TextGrunt"
              xmlns:vm="clr-namespace:TextGrunt.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" Width="600" Height="600">
@@ -21,21 +21,21 @@
         <DockPanel Grid.Row="0">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
-                    <MenuItem Header="Open..." Command="{Binding OpenCommand}" />
-                    <MenuItem Header="Save as..." Command="{Binding SaveAsCommand}" />
-                    <MenuItem Header="Options..." Command="{Binding OptionsCommand}" />
+                    <MenuItem Header="_Open..." Command="{Binding OpenCommand}" />
+                    <MenuItem Header="_Save as..." Command="{Binding SaveAsCommand}" />
+                    <MenuItem Header="O_ptions..." Command="{Binding OptionsCommand}" />
                     <Separator />
                     <MenuItem Header="_Close" Command="{Binding CloseCommand}" />
                 </MenuItem>
                 <MenuItem Header="_Tabs">
-                    <MenuItem Header="Add new tab" Command="{Binding NewTabCommand}" />
-                    <MenuItem Header="Rename active tab..." Command="{Binding RenameActiveCommand}" />
-                    <MenuItem Header="Delete active tab" Command="{Binding RemoveActiveCommand}" />
+                    <MenuItem Header="_Add new tab" Command="{Binding NewTabCommand}" />
+                    <MenuItem Header="_Rename active tab..." Command="{Binding RenameActiveCommand}" />
+                    <MenuItem Header="_Delete active tab" Command="{Binding RemoveActiveCommand}" />
                     <Separator />
-                    <MenuItem Header="Import tab..." Command="{Binding ImportCommand}" />
-                    <MenuItem Header="Export active tab..." Command="{Binding ExportActiveCommand}" />
+                    <MenuItem Header="_Import tab..." Command="{Binding ImportCommand}" />
+                    <MenuItem Header="_Export active tab..." Command="{Binding ExportActiveCommand}" />
                     <Separator />
-                    <MenuItem Header="Search in tabs..." Command="{Binding SearchCommand}" />
+                    <MenuItem Header="_Search in tabs..." Command="{Binding SearchCommand}" />
                 </MenuItem>
                 <MenuItem Header="_Help">
                     <MenuItem Header="_Open Help.txt" Command="{Binding OpenHelpCommand}" />
@@ -43,7 +43,7 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="1">
+        <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="1" Margin="3" local:MarginSetter.Margin="1">
             <Button ToolTip="Add new tab" Command="{Binding NewTabCommand}">
                 <Image Source="../Assets/plus-button.png" />
             </Button>

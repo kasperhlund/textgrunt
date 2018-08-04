@@ -74,7 +74,8 @@ namespace TextGrunt
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            _kernel.Dispose();
+            _kernel?.Dispose();
+            _singleAppMutex?.Dispose();
             base.OnExit(sender, e);
         }
     }
