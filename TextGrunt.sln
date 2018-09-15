@@ -7,20 +7,39 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextGrunt", "TextGrunt\Text
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Textgrunt.tests", "Textgrunt.tests\Textgrunt.tests.csproj", "{6D74FC48-BBE1-4261-B059-96449E99A71F}"
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "TextGrunt.Install", "TextGrunt.Install\TextGrunt.Install.wixproj", "{B1CDB328-9922-4B96-8499-52D888D24F1C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{23951B77-D8E8-4D4B-B657-8EA58B05F236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{23951B77-D8E8-4D4B-B657-8EA58B05F236}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23951B77-D8E8-4D4B-B657-8EA58B05F236}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{23951B77-D8E8-4D4B-B657-8EA58B05F236}.Debug|x86.Build.0 = Debug|Any CPU
 		{23951B77-D8E8-4D4B-B657-8EA58B05F236}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23951B77-D8E8-4D4B-B657-8EA58B05F236}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23951B77-D8E8-4D4B-B657-8EA58B05F236}.Release|x86.ActiveCfg = Release|Any CPU
+		{23951B77-D8E8-4D4B-B657-8EA58B05F236}.Release|x86.Build.0 = Release|Any CPU
 		{6D74FC48-BBE1-4261-B059-96449E99A71F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6D74FC48-BBE1-4261-B059-96449E99A71F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D74FC48-BBE1-4261-B059-96449E99A71F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6D74FC48-BBE1-4261-B059-96449E99A71F}.Debug|x86.Build.0 = Debug|Any CPU
 		{6D74FC48-BBE1-4261-B059-96449E99A71F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D74FC48-BBE1-4261-B059-96449E99A71F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D74FC48-BBE1-4261-B059-96449E99A71F}.Release|x86.ActiveCfg = Release|Any CPU
+		{6D74FC48-BBE1-4261-B059-96449E99A71F}.Release|x86.Build.0 = Release|Any CPU
+		{B1CDB328-9922-4B96-8499-52D888D24F1C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{B1CDB328-9922-4B96-8499-52D888D24F1C}.Debug|x86.ActiveCfg = Debug|x86
+		{B1CDB328-9922-4B96-8499-52D888D24F1C}.Debug|x86.Build.0 = Debug|x86
+		{B1CDB328-9922-4B96-8499-52D888D24F1C}.Release|Any CPU.ActiveCfg = Release|x86
+		{B1CDB328-9922-4B96-8499-52D888D24F1C}.Release|Any CPU.Build.0 = Release|x86
+		{B1CDB328-9922-4B96-8499-52D888D24F1C}.Release|x86.ActiveCfg = Release|x86
+		{B1CDB328-9922-4B96-8499-52D888D24F1C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

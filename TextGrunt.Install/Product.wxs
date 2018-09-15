@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="TextGrunt" Language="1033" Version="!(bind.FileVersion.TextGruntExeFile)" Manufacturer="KasperHlund" UpgradeCode="e2caa30b-949e-4e11-a4ac-3386b5220fe2">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+    <UIRef Id="WixUI_Minimal" />
+    <UIRef Id="WixUI_ErrorProgressText" />
+    <WixVariable Id="WixUILicenseRtf" Value="LICENSE.rtf" />
+
+    <Icon Id="icon.ico" SourceFile="..\TextGrunt\Assets\Textgrunt.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+
+		<Feature Id="ProductFeature" Title="TextGrunt.Install" Level="1">
+			<ComponentGroupRef Id="TextGruntExeGroup"/>
+      <ComponentGroupRef Id="AutoHarvestGroup"/>
+      <ComponentGroupRef Id="LicenseGroup"/>
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="TextGrunt"/>
+      </Directory>
+			<Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="TextGrunt">
+          <Directory Id="LicenseFolder" Name ="License"/>
+        </Directory>        
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="TextGruntExeGroup">
+      <Component Id="TextGruntExeComp" Guid="*" Directory="INSTALLFOLDER">
+        <File Id="TextGruntExeFile" Source="$(var.TextGrunt.TargetDir)TextGrunt.exe" />
+      </Component>
+      <Component Id="ApplicationShortcut" Guid="{597FFED2-8454-408C-879A-57CAACB3DC2A}" Directory="ApplicationProgramsFolder">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="TextGrunt"
+                  Target="[!TextGruntExeFile]"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="icon.ico"
+                  />
+        <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+		</ComponentGroup>
+
+    <ComponentGroup Id="LicenseGroup" Directory="LicenseFolder">
+      <Component Id="LicenseComp" Guid="{0B8B7815-D672-4920-8960-15F78EFA6D28}">
+        <File Id="LicenseFile" Source="..\LICENSE" />
+        <File Id="License3rdpartyFIle" Source="..\License-3rdparty.txt" />
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>
