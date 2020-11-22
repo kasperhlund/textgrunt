@@ -19,14 +19,11 @@ namespace TextGrunt.Services
 
         public T Read<T>(string path)
         {
-            try
-            {
-                return JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
-            }
-            catch
+            if (!File.Exists(path))
             {
                 return default(T);
             }
+                return JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
         }
     }
 }
