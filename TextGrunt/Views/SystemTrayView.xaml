@@ -32,7 +32,7 @@
                     </StackPanel>
                     <HierarchicalDataTemplate.ItemTemplate>
                         <DataTemplate>
-                            <MenuItem Header="{Binding Text}" ToolTip="{Binding ToolTip}" Command="{Binding ToClipBoardCommand}" HorizontalContentAlignment="Stretch" />
+                            <MenuItem Header="{Binding ShortText}" ToolTip="{Binding ToolTip}" Command="{Binding ToClipBoardCommand}" HorizontalContentAlignment="Stretch" />
                         </DataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>
                 </HierarchicalDataTemplate>

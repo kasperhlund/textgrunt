@@ -17,7 +17,7 @@ namespace TextGrunt.Services
         {
             IsRecording = false;
             Clips = new BindableCollection<string>();
-            _maxSize = 100;
+            _maxSize = 30;
         }
 
         public void Initiate(Window windowSource)
